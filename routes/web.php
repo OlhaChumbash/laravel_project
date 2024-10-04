@@ -13,6 +13,14 @@ Route::get('tasks/create', [TaskController::class, 'create'])
 Route::post('tasks/store', [TaskController::class, 'store'])
     ->name('tasks.store');
 
+Route::put('tasks/update/{id}', [TaskController::class, 'edit'])
+    ->name('tasks.update');
+
+
+Route::post('tasks/delete/{id}', [TaskController::class, 'delete'])
+    ->name('tasks.delete');
+
+
 //Route::get('tasks/{task}/edit', [TaskController::class, 'edit'])
 //    ->name('tasks.edit');
 

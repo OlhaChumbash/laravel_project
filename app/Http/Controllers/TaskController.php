@@ -24,6 +24,27 @@ class TaskController extends Controller
         return to_route("tasks.index");
     }
 
+    public function edit($id){
+        
+        $task = Task::find($id);
+
+       if ($task) {
+      
+        $task->update($request->only(['name', 'description']));
+    }
+    }
+
+    
+    public function delete($id){
+        $task = Task::find($id);
+    
+        if ($task) {
+            $task->delete();
+        }
+
+        return to_route("tasks.index");
+    }
+
 //    public function edit(Task $task){
 //        dd($task->name, $task->id);
 //    }
