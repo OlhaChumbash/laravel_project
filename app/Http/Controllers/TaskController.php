@@ -10,8 +10,7 @@ class TaskController extends Controller
     public function index(){
         $tasks = Task::all();
 
-        return view('tasks.index')
-            ->with('tasks', $tasks);
+        return view('tasks.index')->with('tasks', $tasks);
     }
 
     public function create(){
@@ -24,28 +23,34 @@ class TaskController extends Controller
         return to_route("tasks.index");
     }
 
-    public function edit($id){
-        
+    /**
+     * Вертає заповнену форму з даними таски ($id) для редагування
+     */
+    public function edit($id)
+    {
         $task = Task::find($id);
+        return view('tasks.edit', compact('task'));
+    }
 
-       if ($task) {
-      
+    /**
+     * Приходять дані з форми для таски (id)
+     * оновлюємо таску данними з $request->only(['name', 'description'])
+     * і повертаємося на індекс таск сторінку
+     */
+    public function update(Request $request, $id){
+        // розкомічуємо і дивимся який обєкт приходить
+        // нам цікавить request => parameters
+        // dd($request->all());
+
+        $task = Task::find($id);
         $task->update($request->only(['name', 'description']));
-    }
-    }
-
-    
-    public function delete($id){
-        $task = Task::find($id);
-    
-        if ($task) {
-            $task->delete();
-        }
-
         return to_route("tasks.index");
     }
 
-//    public function edit(Task $task){
-//        dd($task->name, $task->id);
-//    }
+    public function destroy($id){
+        $task = Task::find($id);
+        $task->delete();
+
+        return to_route("tasks.index");
+    }
 }
